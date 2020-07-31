@@ -1,4 +1,4 @@
-const queryString = require('query-string');
+const queryString = require('qs');
 const utils = require('./utils');
 const constants = require('constants');
 const REG_TICKET = /^ST-[\w\d_\-.]+$/;

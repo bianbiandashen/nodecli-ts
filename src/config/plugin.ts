@@ -2,7 +2,7 @@ import { EggPlugin } from 'midway';
 const path = require('path')
 const plugin: EggPlugin = {
   sequelize: {
-    enable: true,
+    enable: false,
     path: path.join(__dirname, '../custom_plugin/egg-sequelize')
     // package: 'egg-sequelize'
   },
@@ -17,7 +17,7 @@ const plugin: EggPlugin = {
   //   path: path.join(__dirname, '../custom_plugin/egg-ebg-config'),
   // };
  redis: {
-    enable: true,
+    enable: false,
     package: 'egg-redis'
   },
   consul: {
@@ -25,22 +25,22 @@ const plugin: EggPlugin = {
     path: path.join(__dirname, '../custom_plugin/egg-hik-consul')
   },
   hikLogger: {
-    enable: true,
+    enable: false,
     package: 'egg-hik-logger',
     path: path.join(__dirname, '../custom_plugin/egg-hik-logger')
   },
   hikTracer: {
-    enable: true,
+    enable: false,
     // package: 'egg-hik-tracer'
     path: path.join(__dirname, '../custom_plugin/egg-hik-tracer')
   },
   hikcas: {
-    enable: true,
+    enable: false,
     // package: 'egg-hik-cas'
     path: path.join(__dirname, '../custom_plugin/egg-hik-cas')
   },
   hikOperatelog: {
-    enable: true,
+    enable: false,
     // package: 'egg-hik-operatelog'
     path: path.join(__dirname, '../custom_plugin/egg-hik-operatelog')
   },

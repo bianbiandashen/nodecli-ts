@@ -33,8 +33,6 @@
   "eggPlugin": {
     "name": "hikStartup",
     "dependencies": [
-      "session",
-      "redis"
     ]
   },
   "license": "MIT",

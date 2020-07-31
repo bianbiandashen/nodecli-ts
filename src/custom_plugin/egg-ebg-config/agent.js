@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 const fs = require('fs')
-const { decryption } = require('hikidentify')
+// const { decryption } = require('hikidentify')
 const stat = fs.stat
 const { resolve } = require('path')
 // 在复制目录前需要判断该目录是否存在，不存在需要先创建目录
@@ -226,7 +226,7 @@ class AppBootHook {
   }
 
   _decrypt (val) {
-    return decryption(val)
+    return val
   }
 
   configDidLoad () {

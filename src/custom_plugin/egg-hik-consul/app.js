@@ -12,7 +12,7 @@ module.exports = app => {
     // app.addSingleton('consul', createConsul); //挂载consul注册对象
     // createHealthRouter(app); //创建健康检查路径
     tokenStore.setItem('Token', {
-      Token: genTokenex(),
+      Token: '123'
     }); // 初始化token值
   });
 

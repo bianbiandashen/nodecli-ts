@@ -1,4 +1,4 @@
-const qs = require('query-string')
+const qs = require('qs')
 const url = require('url')
 const xml2js = require('xml2js')
 const pathToRegExp = require('path-to-regexp')
