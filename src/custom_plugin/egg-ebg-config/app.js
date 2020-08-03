@@ -34,12 +34,8 @@ class AppBootHook {
    
             // const ctx = app.createAnonymousContext();
             const obj1 = await ctx.requestContext.getAsync('patrolObjService');
-            console.log('----////',  obj1.getPatrolObjList);
-
-            console.log('----////',  obj1);
-            console.log('----////',  obj1.getPatrolObjList);
+     
             const a = await obj1.getPatrolObjList({'aaa':1});
-            console.log('----////',  a);
             // const obj = await app.applicationContext.getAsync('patrolObjService');
             _this.app.hikLogger.info('巡检对象同步成功',obj1)
             _this.app.hikLogger.info('巡检对象同步成功22', obj1)

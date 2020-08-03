@@ -1,9 +1,9 @@
 import {  Context, inject, provide} from 'midway';
-import { PatrolObjResult, PatrolObjOptions, IPatrolObjService } from '../../interface/partrolObjInterface';
+import { PatrolObjResult, PatrolObjOptions, IPatrolObjService } from '../app/interface/partrolObjInterface';
 // const Sequelize = require('sequelize')
 
 // const { Op } = Sequelize
-const { Transactional } = require('../core/transactionalDeco/index')
+const { Transactional } = require('../app/core/transactionalDeco/index')
 
 @provide('patrolObjService')
 export class PatrolObjService implements IPatrolObjService {
@@ -14,7 +14,7 @@ export class PatrolObjService implements IPatrolObjService {
   // @inject('Transactional')
   @Transactional
   async getPatrolObjList(options: PatrolObjOptions): Promise<PatrolObjResult> {
-    console.log('this---Transactional')
+
     const resultList = await (this  as  any).query('PatrolObj', 'queryData', [ options ])
     return resultList
     // return data

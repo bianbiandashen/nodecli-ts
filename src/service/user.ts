@@ -1,5 +1,5 @@
 import { provide } from 'midway';
-import { IUserService, IUserOptions, IUserResult } from '../../interface/userInterface';
+import { IUserService, IUserOptions, IUserResult } from '../app/interface/userInterface';
 
 @provide('userService')
 

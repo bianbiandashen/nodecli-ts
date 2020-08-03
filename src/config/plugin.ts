@@ -68,12 +68,6 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-passport'
   },
-  
-  // exports.swaggerdoc = {
-  //   enable: true,
-  //   package: 'egg-swagger-doc'
-  // }
-  
   nunjucks: {
     enable: true,
     package: 'egg-view-nunjucks'

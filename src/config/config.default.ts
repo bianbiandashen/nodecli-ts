@@ -235,24 +235,24 @@ export default (appInfo: EggAppInfo) => {
 
   // 中间件
   // middleware: ['params', 'appValidate'],
-  config.middleware= [ 'params' ],
-  // appValidate: {
-  //   appContext: 'appApi'
-  // },
-  // swagger文档
-  config.swaggerdoc= {
-    dirScanner: './app/controller',
-    basePath: '/patrolengine-app',
-    apiInfo: {
-      title: '巡检引擎应用侧接口文档',
-      description: '巡检引擎应用侧接口文档，包括bs和app以及对外接口',
-      version: '1.1.0'
-    },
-    schemes: [ 'http', 'https' ],
-    enableSecurity: false,
-    routerMap: false,
-    enable: true
+  config.middleware= [ 'params', 'appValidate' ],
+  config.appValidate=  {
+    appContext: 'appApi'
   },
+  // swagger文档
+  // config.swaggerdoc= {
+  //   dirScanner: './app/controller',
+  //   basePath: '/patrolengine-app',
+  //   apiInfo: {
+  //     title: '巡检引擎应用侧接口文档',
+  //     description: '巡检引擎应用侧接口文档，包括bs和app以及对外接口',
+  //     version: '1.1.0'
+  //   },
+  //   schemes: [ 'http', 'https' ],
+  //   enableSecurity: false,
+  //   routerMap: false,
+  //   enable: true
+  // },
   config.contextPath= '/patrolengine-app',
   config.hikcas= {
     casUrl: 'http://10.13.69.225/portal/cas/',

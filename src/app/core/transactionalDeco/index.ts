@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize')
 require('reflect-metadata')
-const Exception = require('../Exception')
+const Exception = require('../Exception.ts')
 // export function Transactional (context: IApplicationContext){
 //   console.log('context',context)
 //   const func = descriptor.value
@@ -152,7 +152,10 @@ module.exports = {
         
           // 执行,跳入modelcapitalize
           try {
-
+            console.log('this---Transactional', this.ctx.app.model)
+            console.log('this---Transactional1', modelName + this.ctx.app.capitalize(appId))
+            console.log('this---Transactional2',     this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)])
+        
             return await this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query[queryName](
               params,
               transaction,

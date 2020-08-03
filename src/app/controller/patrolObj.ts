@@ -1,8 +1,11 @@
-import { Context, controller, get, inject, provide } from 'midway';
-import { IPatrolObjService, PatrolObjResult } from '../../interface/partrolObjInterface';
+import { Context, inject, provide } from 'midway';
+import { IPatrolObjService } from '../interface/partrolObjInterface';
+import { get, Param, controller } from '../../decorator/openApi'
 
 @provide()
-@controller('/patrolObj')
+@controller('/patrolObj',{
+  description: '对象模块'
+})
 export class PatrolObjController {
 
   @inject()
@@ -11,10 +14,21 @@ export class PatrolObjController {
   @inject('patrolObjService')
   service: IPatrolObjService;
 
-  @get('/list')
-  async getPatrolObjlist(): Promise<void> {
-    const id: number = this.ctx.params.id;
-    const patrolObjList: PatrolObjResult = await this.service.getPatrolObjList({id});
+  @get('/:list', {
+    description: '巡检对象列表',
+    responses: 'API.PatrolObjResult',
+  })
+  async getPatrolObjlist(
+    @Param('number', {
+        minimum: 1,
+        description: '巡检对象id',
+    })
+    patrolObjId: string
+){
+  
+    const patrolObjList = await this.service.getPatrolObjList({ patrolObjId })
+    // return patrolObjList
     this.ctx.body = {success: true, message: 'OK', data: patrolObjList};
-  }
+
+}
 }
