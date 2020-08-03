@@ -2,10 +2,22 @@ import { Application } from 'midway'
 import openApi, { document } from './decorator/openApi'
 export default (app: Application) => {
     app.beforeStart(async () => {
-        await openApi(app, {
+        const openApi1 = await openApi(app, {
+            /**
+             * 是否开启 swagger ui
+             */
             enable: true,
+            /**
+             * swagger ui 路由前缀
+             */
+            routerPrefix: '/swagger-ui',
+        
+            /**
+             * swagger ui version
+             */
+            swaggerUiVersion: '3.30.2',
         })
-
+        console.log("openApi进入了===",openApi1)
         /**
          * open api 文档配置
          */

@@ -85,7 +85,7 @@ export default (appInfo: EggAppInfo) => {
     // 为了避免一些插件的调试日志在生产环境打印导致性能问题，生产环境默认禁止打印 DEBUG 级别的日志，如果确实有需求在生产环境打印 DEBUG 日志进行调试，需要打开 allowDebugAtProd 配置项。
     level: 'DEBUG',
     allowDebugAtProd: true,
-    dir: '../../logs/egg-hik-logger',
+    dir: '../logs/egg-hik-logger',
     appLogName: 'patrolengine.patrolengine-app.other.log',
     errorLogName: 'patrolengine.patrolengine-app.other.log',
     coreLogName: `${appInfo.baseDir}/logs/patrolengine.patrolengine-app.core.log`,

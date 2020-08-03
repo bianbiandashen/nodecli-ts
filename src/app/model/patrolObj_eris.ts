@@ -19,7 +19,7 @@ module.exports = app => {
     // @inject('Model')
     @Model
     async queryData (condition) {
-      console.log('queryDataqueryDataqueryData',condition)
+  
       const data = await (this as any).findAndCountAll(condition)
       // 处理返回格式
       const result = {

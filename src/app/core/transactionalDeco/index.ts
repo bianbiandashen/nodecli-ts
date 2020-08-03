@@ -152,17 +152,13 @@ module.exports = {
         
           // 执行,跳入modelcapitalize
           try {
-            console.log('this---Transactional', this.ctx.app.model)
-            console.log('this---Transactional1', modelName + this.ctx.app.capitalize(appId))
-            console.log('this---Transactional2',     this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)])
-        
+    
             return await this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query[queryName](
               params,
               transaction,
               modelName + this.ctx.app.capitalize(appId)
             )
           } catch (e) {
-            console.log('bianbian',e)
             throw new Error(
               e.message +
                 ';;modelName:' +
@@ -180,7 +176,7 @@ module.exports = {
         }
 
         const result = await func.apply(target, args)
-       console.log('resultresultresultresult',result)
+       console.log("获得返回值了=====hikvison")
      
         // 判断是否手动commit
         if (!transaction.finished && topLayer) {
@@ -208,7 +204,7 @@ module.exports = {
 
       // 箭头方法继承this
       // 直接sql操作数据库
-      target.query = async (queryString, opt:{ transaction: any}) => {
+      target.query = async (queryString, opt:{ transaction?: any}={}) => {
 
         // 向opt中注入transaction
         opt.transaction = transaction
@@ -216,48 +212,44 @@ module.exports = {
         const result = await this.app.model.query(queryString, opt)
         return result
       }
-      target.create = async (params, opt:{ transaction: any}) => {
+      target.create = async (params, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].create(params, opt)
         return result
       }
       // conditions example  { where: {uuid: *** }}
-      target.update = async (updateField, opt:{ transaction: any}) => {
+      target.update = async (updateField, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].update(updateField, opt)
         return result
       }
-      target.findAndCountAll = async (params, opt:{ transaction: any}) => {
-        let obj = {}
-        console.log('opt',opt)
-        console.log('transaction',transaction)
-        obj['transaction'] = transaction
-        console.log('进入findAndCountAll的transation', obj)
-        const result = await this.app.model[modelName].findAndCountAll(params,  obj)
+      target.findAndCountAll = async (params, opt:{ transaction?: any}={} ) => {
+        opt.transaction = transaction
+        const result = await this.app.model[modelName].findAndCountAll(params,  opt)
         return result
       }
-      target.findAll = async (params, opt:{ transaction: any}) => {
+      target.findAll = async (params, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].findAll(params, opt)
         return result
       }
-      target.findOne = async (params, opt:{ transaction: any}) => {
+      target.findOne = async (params, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].findOne(params, opt)
         return result
       }
       // conditions example  { where: {uuid: *** }}
-      target.destroy = async (params, opt:{ transaction: any}) => {
+      target.destroy = async (params, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].destroy(params, opt)
         return result
       }
-      target.count = async (params, opt:{ transaction: any}) => {
+      target.count = async (params, opt:{ transaction?: any}={}) => {
         opt.transaction = transaction
         const result = await this.app.model[modelName].count(params, opt)
         return result
       }
-      target.bulkCreate = async (params, opt:{ transaction: any}) => {
+      target.bulkCreate = async (params, opt:{ transaction?: any}={}) => {
         if (Array.isArray(params)) {
           opt.transaction = transaction
           const result = await this.app.model[modelName]
