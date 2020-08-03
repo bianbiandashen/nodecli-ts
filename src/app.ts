@@ -1,5 +1,5 @@
 import { Application } from 'midway'
-import openApi, { document } from '../decorator/openApi'
+import openApi, { document } from './decorator/openApi'
 export default (app: Application) => {
     app.beforeStart(async () => {
         await openApi(app, {
