@@ -1,14 +1,19 @@
 module.exports = app => {
+  console.log('moodel实力++++++++++++++',app)
   const {  model } = app
   const schema = 'eris'
   // const capitalSchema = app.capitalize(schema)
   const patrolObjSchema = require('../schema/tb_patrol_obj.ts')(app)
   const PatrolObj = model.define('tb_patrol_obj', patrolObjSchema, { schema })
+
+
+  console.log('moodel实力2222++++++++++++++',PatrolObj)
   // const patrolPoint = Sequelize.import('./patrolPoint.js');
 
   const { Model } = require('../core/transactionalDeco/index')
   // const { Op } = Sequelize
   class Query {
+    app = app
      /**
      * 巡检对象查询分页列表
      * @param {object} { params, pagination } - 条件
@@ -17,7 +22,8 @@ module.exports = app => {
     // @inject('Model')
     @Model
     async queryData (condition) {
-      const data = await this.findAndCountAll(condition)
+      console.log('queryDataqueryDataqueryData',condition)
+      const data = await (this as any).findAndCountAll(condition)
       // 处理返回格式
       const result = {
         total: data.count,

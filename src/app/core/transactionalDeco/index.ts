@@ -23,10 +23,10 @@ const Exception = require('../Exception')
 //         transaction = args[args.length - 1]
 //         topLayer = false
 //       } else {
-//         transaction = await this.app.model.transaction({ autocommit: true })
+//         transaction = await this.ctx.app.model.transaction({ autocommit: true })
 //         topLayer = true
 //       }
-//       // this.app.hikLogger.debug(
+//       // this.ctx.app.hikLogger.debug(
 //       //   '创建一个事务==============================================='
 //       // )
 //     } catch (e) {
@@ -35,7 +35,7 @@ const Exception = require('../Exception')
 //     // idle in transaction
 //     try {
 //       // 传入app,如果需要可以继续传入ctx等,由于调用位置的关系,target内部的this无法获得所在class
-//       target.app = this.app
+//       target.app = this.ctx.app
 //       target.ctx = this.ctx
 //       target.query = async function (modelName, queryName, params) {
 //         this.ctx.hikLogger.debug('debug: -------modelName', modelName)
@@ -52,20 +52,20 @@ const Exception = require('../Exception')
           
 //         }
 //         // 注入app供使用
-//         this.app.model[modelName + this.app.capitalize(appId)].query.app = this.app
+//         this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query.app = this.ctx.app
 //         // 执行,跳入modelcapitalize
 //         try {
-//           return await this.app.model[modelName + this.app.capitalize(appId)].query[queryName](
+//           return await this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query[queryName](
 //             params,
 //             transaction,
-//             modelName + this.app.capitalize(appId)
+//             modelName + this.ctx.app.capitalize(appId)
 //           )
 //         } catch (e) {
 //           throw new Error(
 //             e.message +
 //               ';;modelName:' +
 //               modelName +
-//               this.app.capitalize(appId) +
+//               this.ctx.app.capitalize(appId) +
 //               ';;queryName:' +
 //               queryName
 //           )
@@ -116,19 +116,21 @@ module.exports = {
           transaction = args[args.length - 1]
           topLayer = false
         } else {
-          transaction = await this.app.model.transaction({ autocommit: true })
+     
+          transaction = await this.ctx.app.model.transaction({ autocommit: true })
           topLayer = true
         }
-        // this.app.hikLogger.debug(
+        // this.ctx.app.hikLogger.debug(
         //   '创建一个事务==============================================='
         // )
       } catch (e) {
-        throw new Error()
+        console.log('错误日志',e)
+        throw new Error(e)
       }
       // idle in transaction
       try {
         // 传入app,如果需要可以继续传入ctx等,由于调用位置的关系,target内部的this无法获得所在class
-        target.app = this.app
+        target.app = this.ctx.app
         target.ctx = this.ctx
         target.query = async function (modelName, queryName, params) {
           this.ctx.hikLogger.debug('debug: -------modelName', modelName)
@@ -145,20 +147,24 @@ module.exports = {
             
           }
           // 注入app供使用
-          this.app.model[modelName + this.app.capitalize(appId)].query.app = this.app
+   
+          // this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query.app = this.ctx.app
+        
           // 执行,跳入modelcapitalize
           try {
-            return await this.app.model[modelName + this.app.capitalize(appId)].query[queryName](
+
+            return await this.ctx.app.model[modelName + this.ctx.app.capitalize(appId)].query[queryName](
               params,
               transaction,
-              modelName + this.app.capitalize(appId)
+              modelName + this.ctx.app.capitalize(appId)
             )
           } catch (e) {
+            console.log('bianbian',e)
             throw new Error(
               e.message +
                 ';;modelName:' +
                 modelName +
-                this.app.capitalize(appId) +
+                this.ctx.app.capitalize(appId) +
                 ';;queryName:' +
                 queryName
             )
@@ -169,8 +175,10 @@ module.exports = {
         if (!topLayer) {
           args.splice(args.length - 1, 1)
         }
-        const result = await func.apply(target, args)
 
+        const result = await func.apply(target, args)
+       console.log('resultresultresultresult',result)
+     
         // 判断是否手动commit
         if (!transaction.finished && topLayer) {
           await transaction.commit()
@@ -184,14 +192,21 @@ module.exports = {
   },
    Model (target, key, descriptor) {
   const func = descriptor.value
+  console.log('func+++++++',func)
   descriptor.value = async function (args, upperTransaction, modelName) {
+
+    console.log('target',target)
     const transaction = upperTransaction
     try {
+  
+      // console.log('func+++++++111',this.ctx)
+      // console.log('func+++++++222',this.ctx.app)
       target.app = this.app
 
       // 箭头方法继承this
       // 直接sql操作数据库
       target.query = async (queryString, opt:{ transaction: any}) => {
+
         // 向opt中注入transaction
         opt.transaction = transaction
         // 执行查询
@@ -210,8 +225,12 @@ module.exports = {
         return result
       }
       target.findAndCountAll = async (params, opt:{ transaction: any}) => {
-        opt.transaction = transaction
-        const result = await this.app.model[modelName].findAndCountAll(params, opt)
+        let obj = {}
+        console.log('opt',opt)
+        console.log('transaction',transaction)
+        obj['transaction'] = transaction
+        console.log('进入findAndCountAll的transation', obj)
+        const result = await this.app.model[modelName].findAndCountAll(params,  obj)
         return result
       }
       target.findAll = async (params, opt:{ transaction: any}) => {
@@ -245,7 +264,7 @@ module.exports = {
             })
           return result
         }
-        throw new Exception(this.ctx.__('core.moreInsertTransmitArr'), 500, transaction)
+        throw new Exception('事务回滚', 500, transaction)
       }
 
       // 执行方法
