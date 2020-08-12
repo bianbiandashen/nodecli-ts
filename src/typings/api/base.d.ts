@@ -23,6 +23,6 @@ declare module API {
      * @description PatrolObj-Service response
      */
     interface PatrolObjResult {
-        patrolObjId: string
+        patrolObjId: string   
     }
 }

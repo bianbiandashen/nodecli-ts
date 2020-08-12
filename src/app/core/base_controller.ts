@@ -1,4 +1,3 @@
-const { Controller } = require('egg')
 const fs = require('fs')
 const path = require('path')
 const puppeteer = require('puppeteer')
@@ -7,7 +6,8 @@ const querystring = require('querystring')
 /**
  * BaseController
  */
-class BaseController extends Controller {
+export class BaseController {
+  ctx
   get user () {
     return this.ctx.session.user
   }
@@ -23,6 +23,7 @@ class BaseController extends Controller {
   */
   async createHtmlToPdf (arr = [], pdfOptions = {}) {
     const { ctx } = this
+    const { app } = ctx
     let browser
     try {
     // 在linux服务器下，组件安装脚本会复制chrome运行文件到./bin/chrome-linux下，所以，启动需要指定运行文件。
@@ -58,7 +59,7 @@ class BaseController extends Controller {
         },
         printBackground: true
       }, pdfOptions))
-      const ws = fs.createWriteStream(path.resolve(`${this.app.config.static.report}/${type || 'statistics'}`, `${options.filename}.pdf`))
+      const ws = fs.createWriteStream(path.resolve(`${app.config.static.report}/${type || 'statistics'}`, `${options.filename}.pdf`))
       ws.write(buffer, 'UTF8')
       ws.end()
       ws.on('finish', function () {
@@ -181,7 +182,8 @@ class BaseController extends Controller {
     actionMessageId,
     result
   ) {
-    const { app, ctx } = this
+    const { ctx } = this
+    const { app } = ctx
     const operateLog = app.hikOperatelog.get(ctx)
     console.log('operatelog')
     console.log(operateLog)
@@ -202,5 +204,3 @@ class BaseController extends Controller {
     }
   }
 }
-
-module.exports = BaseController

@@ -10,7 +10,7 @@ export default (app: Application) => {
             /**
              * swagger ui 路由前缀
              */
-            routerPrefix: '/swagger-ui',
+            routerPrefix: '/patrolengine-app/swagger-ui',
         
             /**
              * swagger ui version
