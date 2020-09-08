@@ -7,7 +7,7 @@ module.exports = {
   Transactional (target, key, descriptor) {
     // target 是方法的上下文  value  descriptor.value 是方法本身 装饰器就是一段反射的代码 不用每个方法来回写 看着简洁
     // 反射 就是方法当参数调用 js 天生就支持反射
-    // const func = descriptor.value
+    const func = descriptor.value
     descriptor.value = async function (...args) {
       let transaction
       let topLayer
@@ -87,13 +87,14 @@ module.exports = {
         if (!topLayer) {
           args.splice(args.length - 1, 1)
         }
+        const result = await func.apply(target, args)
 
      
         // 判断是否手动commit
         if (!transaction.finished && topLayer) {
           await transaction.commit()
         }
-  
+        return result
       } catch (e) {
         // 回滚操作在异常捕获中统一处理,在service中手动throw错误也会在此处捕获,错误码默认500
         throw new Exception(e.message, (e.code = 500), transaction)
@@ -104,13 +105,8 @@ module.exports = {
   const func = descriptor.value
   // console.log('func+++++++',func)
   descriptor.value = async function (args, upperTransaction, modelName) {
-
-    console.log('target',target)
     const transaction = upperTransaction
     try {
-  
-      // console.log('func+++++++111',this.ctx)
-      // console.log('func+++++++222',this.ctx.app)
       target.app = this.app
 
       // 箭头方法继承this
