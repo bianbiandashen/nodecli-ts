@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use strict'
 import {  Context, inject, provide, Application} from 'midway';
 import { 
@@ -1868,42 +1867,3 @@ export  class PatrolObjService implements IPatrolObjService {
       })
   }
 }
-=======
-import {  Context, inject, provide} from 'midway';
-import { PatrolObjResult, PatrolObjOptions, IPatrolObjService } from '../app/interface/partrolObjInterface';
-// const Sequelize = require('sequelize')
-
-// const { Op } = Sequelize
-const { Transactional } = require('../app/core/transactionalDeco/index')
-
-@provide('patrolObjService')
-export class PatrolObjService implements IPatrolObjService {
-  @inject()
-  ctx: Context;
-
-
-  // @inject('Transactional')
-  @Transactional
-  async getPatrolObjList(options: PatrolObjOptions): Promise<PatrolObjResult> {
-<<<<<<<< HEAD:src/service/patrolObj.ts
-
-========
-    console.log('this---Transactional')
->>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f:src/app/service/patrolObj.ts
-    const resultList = await (this  as  any).query('PatrolObj', 'queryData', [ options ])
-    return resultList
-    // return data
-  }
-  // @Transactional
-  // async getPatrolObjList(options: PatrolObjOptions): Promise<PatrolObjResult> {
-  //   console.log('this---Transactional',this)
-  //   const resultList = await Transactional.query('PatrolObj', 'queryData', [ options ])
-  //   return resultList
-  // }
-  
-<<<<<<<< HEAD:src/service/patrolObj.ts
-}
-========
-}
->>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f:src/app/service/patrolObj.ts
->>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
