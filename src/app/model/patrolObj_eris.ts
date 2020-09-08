@@ -1,8 +1,17 @@
 module.exports = app => {
   const {  model } = app
   const schema = 'eris'
+<<<<<<< HEAD
   const patrolObjSchema = require('../../schema/tb_patrol_obj')(app)
   const PatrolObj = model.define('tb_patrol_obj', patrolObjSchema, { schema })
+=======
+  // const capitalSchema = app.capitalize(schema)
+  const patrolObjSchema = require('../../schema/tb_patrol_obj')(app)
+  const PatrolObj = model.define('tb_patrol_obj', patrolObjSchema, { schema })
+
+  // const patrolPoint = Sequelize.import('./patrolPoint.js');
+
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
   const { Model } = require('../core/transactionalDeco/index')
   class Query {
     app = app

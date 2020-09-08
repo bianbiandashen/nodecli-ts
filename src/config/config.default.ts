@@ -234,6 +234,7 @@ export default (appInfo: EggAppInfo) => {
   config.middleware= [ 'params', 'appValidate' ],
   config.appValidate=  {
     appContext: 'appApi'
+<<<<<<< HEAD
   },
 
   config.container ={
@@ -241,6 +242,8 @@ export default (appInfo: EggAppInfo) => {
       '**/custom_plugin/**',
       '**.js'
     ]
+=======
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
   },
   // swagger文档
   // config.swaggerdoc= {

@@ -2,7 +2,7 @@
  * @description patrolObj-Service parameters
  */
 export interface PatrolObjOptions {
-  id: number;
+  patrolObjId: string;
 }
 
 /**

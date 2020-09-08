@@ -1,13 +1,23 @@
 /* eslint-disable no-proto */
 
 const Sequelize = require('sequelize')
+<<<<<<< HEAD
 const Exception = require('../Exception')
+=======
+require('reflect-metadata')
+const Exception = require('../Exception.ts')
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
 
 module.exports = {
   Transactional (target, key, descriptor) {
     // target 是方法的上下文  value  descriptor.value 是方法本身 装饰器就是一段反射的代码 不用每个方法来回写 看着简洁
     // 反射 就是方法当参数调用 js 天生就支持反射
     const func = descriptor.value
+<<<<<<< HEAD
+=======
+    console.log('target',target)
+    console.log('descriptor',descriptor)
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
     descriptor.value = async function (...args) {
       let transaction
       let topLayer
@@ -43,8 +53,13 @@ module.exports = {
         target = Object.assign({},this)
 
         // 传入app,如果需要可以继续传入ctx等,由于调用位置的关系,target内部的this无法获得所在class
+<<<<<<< HEAD
         // target.app = this.ctx.app
         // target.ctx = this.ctx
+=======
+        target.app = this.ctx.app
+        target.ctx = this.ctx
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
         target.query = async function (modelName, queryName, params) {
           this.ctx.hikLogger.debug('debug: -------modelName', modelName)
           this.ctx.hikLogger.debug('debug: -------queryName', queryName)
@@ -87,8 +102,12 @@ module.exports = {
         if (!topLayer) {
           args.splice(args.length - 1, 1)
         }
-        const result = await func.apply(target, args)
 
+<<<<<<< HEAD
+=======
+        const result = await func.apply(target, args)
+       console.log("获得返回值了=====hikvison")
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
      
         // 判断是否手动commit
         if (!transaction.finished && topLayer) {
@@ -103,10 +122,19 @@ module.exports = {
   },
    Model (target, key, descriptor) {
   const func = descriptor.value
+<<<<<<< HEAD
   // console.log('func+++++++',func)
+=======
+  console.log('func+++++++',func)
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
   descriptor.value = async function (args, upperTransaction, modelName) {
+
+    console.log('target',target)
     const transaction = upperTransaction
     try {
+  
+      // console.log('func+++++++111',this.ctx)
+      // console.log('func+++++++222',this.ctx.app)
       target.app = this.app
 
       // 箭头方法继承this

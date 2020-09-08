@@ -18,6 +18,7 @@ declare module API {
     interface ErrorRes {
         message: string
     }
+<<<<<<< HEAD
     interface SuccessRes {
         code: string,
         data: any,
@@ -46,5 +47,13 @@ declare module API {
         patrolObjName: string,
         patrolObjId: string,
         patrolObjRelId?: string   
+=======
+
+    /**
+     * @description PatrolObj-Service response
+     */
+    interface PatrolObjResult {
+        patrolObjId: string   
+>>>>>>> 2db8c7dc19290909326dc3ef26c4b686c5727c1f
     }
 }
