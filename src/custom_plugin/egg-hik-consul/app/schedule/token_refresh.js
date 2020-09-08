@@ -3,7 +3,7 @@ const Subscription = require('egg').Subscription;
 const tokenStore = require('../consul/tokenLocalStorage');
 const {
   genTokenex,
-} = require('../../../../hikidentify/hikidentify');
+} = require('hikidentify');
 
 class TokenRefresh extends Subscription {
   // 通过 schedule 属性来设置定时任务的执行间隔等配置

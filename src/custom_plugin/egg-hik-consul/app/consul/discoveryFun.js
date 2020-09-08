@@ -138,9 +138,9 @@ class DisCoveryFun {
     );
     // debugger;
     let clonedStream;
-
+      console.log('changeOptions',changeOptions)
     const result = await _this.curl(path, changeOptions);
-
+    console.log('resultresultresult',result)
     if (result && result.data) {
       if (Buffer.isBuffer(result.data)) {
         result.data = JSON.parse(Uint8ArrayToString(result.data));

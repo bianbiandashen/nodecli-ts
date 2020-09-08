@@ -7,6 +7,8 @@ export const development = {
     'app.ts',
     'agent.ts',
     'interface.ts',
+    'decorator',
+    'typings',
   ],
   overrideDefault: true,
 };

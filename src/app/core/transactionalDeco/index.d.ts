@@ -11,7 +11,7 @@ interface SingleDecorator {
 
 
 
-
+//ts  文件中的Transactional 指的是这个单利 
 
 
 export const Transactional: SingleDecorator

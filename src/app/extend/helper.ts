@@ -402,26 +402,29 @@ module.exports = {
   // 数组去重
   distinct (array) {
     return Array.from(new Set(array))
-  }
+  },
   // 处理返回数据
-  // handleData (data) {
-  //   const resData = { lastPage: true }
-  //   for (const [ key, value ] of Object.entries(data)) {
-  //     if (key === 'list') {
-  //       const _value = value.map((item: any) => {
-  //         const resItem = {}
-          
-  //         for (const [ innerKey, innerValue ] of Object.entries(item)) {
-  //           resItem[this.toHump(innerKey)] = innerValue
-  //         }
-  //         resItem['isLeaf'] = false
-  //         return resItem
-  //       })
-  //       resData['rows'] = _value
-  //     } else {
-  //       resData[key] = value
-  //     }
-  //   }
-  //   return resData
-  // }
+  handleData (data:any) {
+    const resData = { lastPage: true }
+    for (const [ key, value ] of Object.entries(data)) {
+      Array(value)
+      if (key === 'list') {
+        if(Array.isArray(value)){
+          const _value = value.map((item: any) => {
+            const resItem = {}
+            
+            for (const [ innerKey, innerValue ] of Object.entries(item)) {
+              resItem[this.toHump(innerKey)] = innerValue
+            }
+            resItem['isLeaf'] = false
+            return resItem
+          })
+          resData['rows'] = _value
+        }
+      } else {
+        resData[key] = value
+      }
+    }
+    return resData
+  }
 }

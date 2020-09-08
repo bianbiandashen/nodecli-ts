@@ -3,6 +3,7 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
+    "allowJs": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -11,7 +12,6 @@
     "noUnusedLocals": true,
     "stripInternal": true,
     "pretty": true,
-    "declaration": true,
     "outDir": "dist"
   },
   "exclude": [

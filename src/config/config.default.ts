@@ -9,10 +9,6 @@ export default (appInfo: EggAppInfo) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_{{keys}}';
 
-  // add your config here
-  config.middleware = [
-  ];
-
 
 
   config.multipart= {
@@ -85,7 +81,7 @@ export default (appInfo: EggAppInfo) => {
     // 为了避免一些插件的调试日志在生产环境打印导致性能问题，生产环境默认禁止打印 DEBUG 级别的日志，如果确实有需求在生产环境打印 DEBUG 日志进行调试，需要打开 allowDebugAtProd 配置项。
     level: 'DEBUG',
     allowDebugAtProd: true,
-    dir: '../../logs/egg-hik-logger',
+    dir: '../logs/egg-hik-logger',
     appLogName: 'patrolengine.patrolengine-app.other.log',
     errorLogName: 'patrolengine.patrolengine-app.other.log',
     coreLogName: `${appInfo.baseDir}/logs/patrolengine.patrolengine-app.core.log`,
@@ -105,25 +101,25 @@ export default (appInfo: EggAppInfo) => {
     protocol: 'http'
   },
   // config/config.default.js
-  config.alinode= {
-    enable: false,
-    // server: 'wss://agentserver.node.aliyun.com:8080',
-    appid: '84519', // Node.js 性能平台给您的项目生成的 appid
-    secret: '02ff8c29ef36e2f137989045a38362046815e0b3', // Node.js 性能平台给您的项目生成的 secret
-    error_log: [
-      '../../logs/egg-hik-logger/patrolengine.patrolengine-app.error.log',
-      '../../logs/egg-hik-logger/patrolengine.patrolengine-app.other.log',
-      '../../logs/egg-hik-logger/patrolengine.patrolengine-app.debug.log'
-    ],
-    packages: [ '../package.json' ]
-    // logdir: '***', // Node.js 性能平台日志输出地址绝对路径，与 NODE_LOG_DIR 保持一致。如：/tmp/，也可以不写
-    // error_log: [
-    //   // '您的应用在业务层面产生的异常日志的路径，数组，可选，可配置多个',
-    //   // '例如：/root/.logs/error.#YYYY#-#MM#-#DD#.log',
-    //   // '不更改 Egg 默认日志输出路径可不配置本项目',
-    // ],
-    // agentidMode: 'IP' // 可选，如果设置，则在实例ID中添加部分IP信息，用于多个实例 hostname 相同的场景（以容器为主）
-  },
+  // config.alinode= {
+  //   enable: false,
+  //   // server: 'wss://agentserver.node.aliyun.com:8080',
+  //   appid: '84519', // Node.js 性能平台给您的项目生成的 appid
+  //   secret: '02ff8c29ef36e2f137989045a38362046815e0b3', // Node.js 性能平台给您的项目生成的 secret
+  //   error_log: [
+  //     '../../logs/egg-hik-logger/patrolengine.patrolengine-app.error.log',
+  //     '../../logs/egg-hik-logger/patrolengine.patrolengine-app.other.log',
+  //     '../../logs/egg-hik-logger/patrolengine.patrolengine-app.debug.log'
+  //   ],
+  //   packages: [ '../package.json' ]
+  //   // logdir: '***', // Node.js 性能平台日志输出地址绝对路径，与 NODE_LOG_DIR 保持一致。如：/tmp/，也可以不写
+  //   // error_log: [
+  //   //   // '您的应用在业务层面产生的异常日志的路径，数组，可选，可配置多个',
+  //   //   // '例如：/root/.logs/error.#YYYY#-#MM#-#DD#.log',
+  //   //   // '不更改 Egg 默认日志输出路径可不配置本项目',
+  //   // ],
+  //   // agentidMode: 'IP' // 可选，如果设置，则在实例ID中添加部分IP信息，用于多个实例 hostname 相同的场景（以容器为主）
+  // },
   config.static= {
     // 静态化访问前缀,如：`http://127.0.0.1:7001/public/images/logo.png`
     prefix: '/patrolengine-app',
@@ -235,24 +231,31 @@ export default (appInfo: EggAppInfo) => {
 
   // 中间件
   // middleware: ['params', 'appValidate'],
-  config.middleware= [ 'params' ],
-  // appValidate: {
-  //   appContext: 'appApi'
-  // },
-  // swagger文档
-  config.swaggerdoc= {
-    dirScanner: './app/controller',
-    basePath: '/patrolengine-app',
-    apiInfo: {
-      title: '巡检引擎应用侧接口文档',
-      description: '巡检引擎应用侧接口文档，包括bs和app以及对外接口',
-      version: '1.1.0'
-    },
-    schemes: [ 'http', 'https' ],
-    enableSecurity: false,
-    routerMap: false,
-    enable: true
+  config.middleware= [ 'params', 'appValidate' ],
+  config.appValidate=  {
+    appContext: 'appApi'
   },
+
+  config.container ={
+    ignore:[
+      '**/custom_plugin/**',
+      '**.js'
+    ]
+  },
+  // swagger文档
+  // config.swaggerdoc= {
+  //   dirScanner: './app/controller',
+  //   basePath: '/patrolengine-app',
+  //   apiInfo: {
+  //     title: '巡检引擎应用侧接口文档',
+  //     description: '巡检引擎应用侧接口文档，包括bs和app以及对外接口',
+  //     version: '1.1.0'
+  //   },
+  //   schemes: [ 'http', 'https' ],
+  //   enableSecurity: false,
+  //   routerMap: false,
+  //   enable: true
+  // },
   config.contextPath= '/patrolengine-app',
   config.hikcas= {
     casUrl: 'http://10.13.69.225/portal/cas/',
@@ -288,11 +291,11 @@ export default (appInfo: EggAppInfo) => {
       }
     }
   },
-  config.logInterceptor= {
-    match (ctx) {
-      return true
-    }
-  },
+  // config.logInterceptor= {
+  //   match (ctx) {
+  //     return true
+  //   }
+  // },
   config.skipTraceUrl= { ignore: [] },
   config.view= {
     defaultViewEngine: 'nunjucks',

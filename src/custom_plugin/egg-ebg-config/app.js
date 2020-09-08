@@ -22,19 +22,25 @@ class AppBootHook {
       // 同步十次每次等待3分钟
       const length = 10
       const time = 180000
+
+      console.log('----//');
+
       app.messenger.on('patrol_async_action', async () => {
         const ctx = await _this.app.createAnonymousContext()
         for (let i = 0; i < length; i++) {
           try {
-            debugger
-            const obj = await app.applicationContext.getAsync('patrolObjService');
+      
+            // const obj = await app.applicationContext.getAsync('patrolObjService');
+   
             // const ctx = app.createAnonymousContext();
             const obj1 = await ctx.requestContext.getAsync('patrolObjService');
+     
+            const a = await obj1.getPatrolObjList({'aaa':1});
             // const obj = await app.applicationContext.getAsync('patrolObjService');
-            _this.app.hikLogger.info('巡检对象同步成功',obj)
+            _this.app.hikLogger.info('巡检对象同步成功',obj1)
             _this.app.hikLogger.info('巡检对象同步成功22', obj1)
-            const patrolObjList =  await _this.service.getPatrolObjList()
-            console.log('巡检对象列表~~~~~~', patrolObjList)
+            // const patrolObjList =  await _this.service.getPatrolObjList()
+            // console.log('巡检对象列表~~~~~~', patrolObjList)
             break
           } catch (e) {
             // 捕获巡检对象同步抛异常，避免系统崩溃
@@ -63,12 +69,12 @@ class AppBootHook {
         } = data
         const Stomp = require('stomp-client')
         // 记录日志-启动
-        this.app.hikLogger.info(ip, port, username, decryption(password))
+        this.app.hikLogger.info(ip, port, username, password)
         const destination = '/topic/patrolengine.patrolengine-queue.topic.task'
         // const client2 = new Stomp(ip, port, username, decryption(password))
         // client2.connect(function(sessionId) {})
         // this.app.tlncClient = client2
-        const client = new Stomp(ip, port, username, decryption(password))
+        const client = new Stomp(ip, port, username, password)
         client.connect(
           async function (sessionId) {
             client.subscribe(destination, async body => {
@@ -471,4 +477,3 @@ class AppBootHook {
 }
 
 module.exports = AppBootHook
-

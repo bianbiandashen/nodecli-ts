@@ -3,7 +3,8 @@
 const tokenStore = require('./app/consul/tokenLocalStorage');
 const {
   genTokenex,
-} = require('../../hikidentify/hikidentify');
+  genToken
+} = require('hikidentify');
 module.exports = app => {
   // rest接口通过consul调用时拦截器
   app.config.coreMiddleware.push('consulInterceptor');
@@ -12,7 +13,7 @@ module.exports = app => {
     // app.addSingleton('consul', createConsul); //挂载consul注册对象
     // createHealthRouter(app); //创建健康检查路径
     tokenStore.setItem('Token', {
-      Token: genTokenex(),
+      Token: genToken(),
     }); // 初始化token值
   });
 

@@ -1,7 +1,7 @@
 const {
   checkToken,
   checkTokenex,
-} = require('../../../../hikidentify/hikidentify');
+} = require('hikidentify');
 const FORBIDDEN_ERROR = [ '403', 'Token is null,please apply a token!' ];
 const PASS_ERROR = [ '403', 'Token Certified does not pass!' ];
 const SYSTEM_ERROR = [ '500', 'Token Certified error!' ];

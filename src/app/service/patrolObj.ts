@@ -14,8 +14,8 @@ export class PatrolObjService implements IPatrolObjService {
   // @inject('Transactional')
   @Transactional
   async getPatrolObjList(options: PatrolObjOptions): Promise<PatrolObjResult> {
-    console.log('this---Transactional',this)
-    const resultList = await this.query('PatrolObj', 'queryData', [ options ])
+    console.log('this---Transactional')
+    const resultList = await (this  as  any).query('PatrolObj', 'queryData', [ options ])
     return resultList
     // return data
   }
@@ -27,4 +27,3 @@ export class PatrolObjService implements IPatrolObjService {
   // }
   
 }
-
